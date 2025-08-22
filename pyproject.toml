@@ -1,0 +1,9 @@
+[project]
+name = "chess-checker"
+version = "0.1.0"
+description = "Tells all next possible moves given a chess piece and its position on board"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "pytest>=8.4.1",
+]
