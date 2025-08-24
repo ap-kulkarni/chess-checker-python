@@ -14,7 +14,7 @@ MAX_COLUMN = "h"
 
 def _get_column_and_row_from_position(position: str) -> tuple[str, str]:
     if not len(position) == 2:
-        raise InvalidPositionException("Position supplied is not in correct format")
+        raise InvalidPositionException("position supplied is not in correct format")
     return position[0], position[1]
 
 
@@ -22,8 +22,6 @@ def _get_row_with_offset(row: str, offset: int) -> str:
     offset_row = chr(ord(row) + offset)
     if offset_row > MAX_ROW or offset_row < MIN_ROW:
         raise OffsetBeyondBoundryException()
-    # offset_row = MIN_ROW if offset_row < MIN_ROW else offset_row
-    # offset_row = MAX_ROW if offset_row > MAX_ROW else offset_row
     return offset_row
 
 
@@ -31,8 +29,6 @@ def _get_column_with_offset(row: str, offset: int) -> str:
     offset_column = chr(ord(row) + offset)
     if offset_column > MAX_COLUMN or offset_column < MIN_COLUMN:
         raise OffsetBeyondBoundryException()
-    # offset_column = MIN_COLUMN if offset_column < MIN_COLUMN else offset_column
-    # offset_column = MAX_COLUMN if offset_column > MAX_COLUMN else offset_column
     return offset_column
 
 
@@ -116,10 +112,22 @@ def get_next_moves(piece: str, current_position: str) -> list[str]:
         )
     next_move_func = PIECE_FUNCTIONS_DICT.get(piece)
     if not next_move_func:
-        raise InvalidPieceException(f"'{piece}' is invalid")
+        raise InvalidPieceException(f"'{piece}' is invalid piece")
     return next_move_func(current_position)
 
 
+def main() -> None:
+    args = sys.argv
+    if len(args) != 3:
+        print("usage: chess_checker.py <piece> <current position>")
+        sys.exit(1)
+    try:
+        moves = get_next_moves(*args[1:])
+        print(",".join(moves))
+    except Exception as e:
+        print(e)
+        sys.exit(1)
+
+
 if __name__ == "__main__":
-    moves = get_next_moves(*sys.argv[1:])
-    print(",".join(moves))
+    main()
