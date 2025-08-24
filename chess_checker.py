@@ -1,6 +1,10 @@
 import sys
 
-from exceptions import InvalidPieceException, OffsetBeyondBoundryException
+from exceptions import (
+    InvalidPieceException,
+    InvalidPositionException,
+    OffsetBeyondBoundryException,
+)
 
 MAX_ROW = "8"
 MIN_ROW = "1"
@@ -9,6 +13,8 @@ MAX_COLUMN = "h"
 
 
 def _get_column_and_row_from_position(position: str) -> tuple[str, str]:
+    if not len(position) == 2:
+        raise InvalidPositionException("Position supplied is not in correct format")
     return position[0], position[1]
 
 
@@ -103,6 +109,11 @@ PIECE_FUNCTIONS_DICT = {
 
 
 def get_next_moves(piece: str, current_position: str) -> list[str]:
+    column, row = _get_column_and_row_from_position(current_position)
+    if row > MAX_ROW or row < MIN_ROW or column < MIN_COLUMN or column > MAX_COLUMN:
+        raise InvalidPositionException(
+            "supplied positon is outside the board's boundry"
+        )
     next_move_func = PIECE_FUNCTIONS_DICT.get(piece)
     if not next_move_func:
         raise InvalidPieceException(f"'{piece}' is invalid")

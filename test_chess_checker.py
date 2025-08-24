@@ -1,7 +1,7 @@
 import pytest
 
 from chess_checker import get_next_moves
-from exceptions import InvalidPieceException
+from exceptions import InvalidPieceException, InvalidPositionException
 
 
 def _list_equals(list1: list[str], list2: list[str]) -> bool:
@@ -108,10 +108,10 @@ def test_queen_in_the_corner_has_twenty_one_possible_moves(position: str, want: 
         ("b7", ["a7", "c7", "d7", "e7", "f7", "g7", "h7", "b1", "b2", "b3", "b4", "b5", "b6", "b8", "a8", "c6", "d5", "e4", "f3", "g2", "h1", "a6", "c8"])
     ],
 )
+# fmt: on
 def test_queen_in_the_middle(position: str, want: list[str]) -> None:
     got = get_next_moves("queen", position)
     assert _list_equals(got, want)
-# fmt: on
 
 
 def test_invalid_piece_raises_error() -> None:
@@ -119,5 +119,7 @@ def test_invalid_piece_raises_error() -> None:
         get_next_moves("kueen", "a1")
 
 
-# piece in invalid position
-# invalid piece
+@pytest.mark.parametrize("position", ["z1", "abc", "a"])
+def test_invalid_current_position_raises_error(position: str) -> None:
+    with pytest.raises(InvalidPositionException):
+        get_next_moves("king", position)

@@ -4,3 +4,7 @@ class OffsetBeyondBoundryException(Exception):
 
 class InvalidPieceException(Exception):
     pass
+
+
+class InvalidPositionException(Exception):
+    pass
