@@ -85,8 +85,32 @@ def test_king_at_the_edge_has_five_possible_moves(
     assert _list_equals(got, want)
 
 
-# queen in the corner
-# queen at the edge
-# queen at the center
+# fmt: off
+@pytest.mark.parametrize(
+    "position, want",
+    [   
+        ("a1", ["a2", "a3", "a4", "a5", "a6", "a7", "a8", "b1", "c1", "d1", "e1", "f1", "g1", "h1", "b2", "c3", "d4", "e5", "f6", "g7", "h8"]),
+        ("a8", ["a7", "a6", "a5", "a4", "a3", "a2", "a1", "b8", "c8", "d8", "e8", "f8", "g8", "h8", "b7", "c6", "d5", "e4", "f3", "g2", "h1"]),
+        ("h1", ["h2", "h3", "h4", "h5", "h6", "h7", "h8", "a1", "b1", "c1", "d1", "e1", "f1", "g1", "g2", "f3", "e4", "d5", "c6", "b7", "a8"])
+    ],
+)
+# fmt: on
+def test_queen_in_the_corner_has_twenty_one_possible_moves(position: str, want: list[str]) -> None:
+    got = get_next_moves("queen", position)
+    assert _list_equals(got, want)
+
+# fmt: off
+@pytest.mark.parametrize(
+    "position, want",
+    [   
+        ("e4", ["a4", "b4", "c4", "d4", "f4", "g4", "h4", "e1", "e2", "e3", "e5", "e6", "e7", "e8", "a8", "b7", "c6", "d5", "f3", "g2", "h1", "b1", "c2", "d3", "f5", "g6", "h7"]),
+        ("b7", ["a7", "c7", "d7", "e7", "f7", "g7", "h7", "b1", "b2", "b3", "b4", "b5", "b6", "b8", "a8", "c6", "d5", "e4", "f3", "g2", "h1", "a6", "c8"])
+    ],
+)
+def test_queen_in_the_middle(position: str, want: list[str]) -> None:
+    got = get_next_moves("queen", position)
+    assert _list_equals(got, want)
+# fmt: on
+
 # piece in invalid position
 # invalid piece
