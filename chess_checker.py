@@ -1,3 +1,6 @@
+import sys
+
+
 def _get_row_and_column_from_position(position: str) -> tuple[str, str]:
     return position[0], position[1]
 
@@ -13,7 +16,5 @@ def get_next_moves(piece: str, current_position: str) -> list[str]:
 
 
 if __name__ == "__main__":
-    import sys
-
     moves = get_next_moves(*sys.argv[1:])
     print(",".join(moves))

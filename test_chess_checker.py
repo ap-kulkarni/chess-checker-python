@@ -1,7 +1,6 @@
 from chess_checker import get_next_moves
 
 
-# pawn in corner
 def test_pawn_in_lower_corner_has_one_possible_moves() -> None:
     got = get_next_moves("pawn", "a1")
     want = ["a2"]
@@ -20,8 +19,12 @@ def test_pawn_in_center_has_one_possible_move() -> None:
     assert got == want
 
 
-# pawn at the edge
-# pawn at the center
+def test_pawn_at_the_edge_has_one_possible_move() -> None:
+    got = get_next_moves("pawn", "h4")
+    want = ["h5"]
+    assert got == want
+
+
 # king in the corner
 # king on the edge
 # king at the center
