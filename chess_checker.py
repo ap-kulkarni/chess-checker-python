@@ -1,6 +1,6 @@
 import sys
 
-from exceptions import OffsetBeyondBoundryException
+from exceptions import InvalidPieceException, OffsetBeyondBoundryException
 
 MAX_ROW = "8"
 MIN_ROW = "1"
@@ -95,14 +95,18 @@ def _get_next_moves_for_queen(current_position: str) -> list[str]:
     return possible_moves
 
 
+PIECE_FUNCTIONS_DICT = {
+    "pawn": _get_next_moves_for_pawn,
+    "king": _get_next_moves_for_king,
+    "queen": _get_next_moves_for_queen,
+}
+
+
 def get_next_moves(piece: str, current_position: str) -> list[str]:
-    if piece == "pawn":
-        return _get_next_moves_for_pawn(current_position)
-    if piece == "king":
-        return _get_next_moves_for_king(current_position)
-    if piece == "queen":
-        return _get_next_moves_for_queen(current_position)
-    return []
+    next_move_func = PIECE_FUNCTIONS_DICT.get(piece)
+    if not next_move_func:
+        raise InvalidPieceException(f"'{piece}' is invalid")
+    return next_move_func(current_position)
 
 
 if __name__ == "__main__":

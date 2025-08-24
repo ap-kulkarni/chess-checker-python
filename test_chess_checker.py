@@ -1,6 +1,7 @@
 import pytest
 
 from chess_checker import get_next_moves
+from exceptions import InvalidPieceException
 
 
 def _list_equals(list1: list[str], list2: list[str]) -> bool:
@@ -111,6 +112,12 @@ def test_queen_in_the_middle(position: str, want: list[str]) -> None:
     got = get_next_moves("queen", position)
     assert _list_equals(got, want)
 # fmt: on
+
+
+def test_invalid_piece_raises_error() -> None:
+    with pytest.raises(InvalidPieceException):
+        get_next_moves("kueen", "a1")
+
 
 # piece in invalid position
 # invalid piece
